@@ -40,13 +40,16 @@ Dialog {
     property int discNumber
     property bool isSingleDiscAlbum
 
+    modal: false
+    closePolicy: Popup.CloseOnPressOutside | Popup.CloseOnEscape
+    padding: elisaTheme.layoutVerticalMargin
+    standardButtons: Dialog.Close
 
     parent: ApplicationWindow.overlay
+    width: elisaTheme.trackMetadataWidth
+
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
-    modal: false
-
-    standardButtons: Dialog.Close
 
     Component.onCompleted: {
         if (trackTitle.length !== 0)
@@ -70,6 +73,7 @@ Dialog {
         if (genre.length !== 0)
             trackList.append({"name": i18nc("Genre label for track metadata view", "Genre:"), "content": genre})
         trackData.Layout.preferredHeight = textSize.height * trackData.count
+        trackMetadata.height = textSize.height * (trackData.count + 1 + (rating > -1 ? 1 : 0)) + 3 * elisaTheme.layoutVerticalMargin + footer.height
     }
 
     ColumnLayout {
@@ -158,11 +162,6 @@ Dialog {
             }
         }
 
-        Item {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-        }
-
         Text {
             id: trackResource
             text: trackMetadata.resource
@@ -174,6 +173,7 @@ Dialog {
             Layout.minimumHeight:  textSize.height
             Layout.preferredWidth: elisaTheme.trackMetadataWidth
             Layout.fillWidth: true
+            Layout.topMargin: elisaTheme.layoutVerticalMargin
         }
     }
 }
