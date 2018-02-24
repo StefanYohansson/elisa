@@ -100,7 +100,7 @@ FocusScope {
     Loader {
         id: metadataLoader
         active: false
-        onLoaded: item.open()
+        onLoaded: item.show()
 
         sourceComponent:  MediaTrackMetadataView {
             trackTitle: playListEntry.title
